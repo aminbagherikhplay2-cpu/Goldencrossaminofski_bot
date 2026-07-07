@@ -1,10 +1,9 @@
-from binance.client import Client
+import requests
 import pandas as pd
 
 from indicators import add_indicators, is_golden_cross, is_strong_signal
 from telegram import send_message
 
-client = Client()
 
 golden = []
 strong = []
