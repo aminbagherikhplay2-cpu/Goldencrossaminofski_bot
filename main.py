@@ -56,7 +56,9 @@ def get_dataframe(symbol):
     df["volume"] = df["volume"].astype(float)
 
     return add_indicators(df)
-  for symbol in get_symbols():
+
+
+for symbol in get_symbols():
 
     try:
 
@@ -72,7 +74,9 @@ def get_dataframe(symbol):
 
     except Exception as e:
         print(symbol, e)
-      message1 = "📈 <b>Golden Cross امروز</b>\n\n"
+
+
+message1 = "📈 <b>Golden Cross امروز</b>\n\n"
 
 if len(golden) == 0:
     message1 += "❌ هیچ Golden Cross جدیدی پیدا نشد."
