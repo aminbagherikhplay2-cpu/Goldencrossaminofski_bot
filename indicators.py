@@ -1,18 +1,28 @@
 import pandas as pd
-import ta
 
 
 def add_indicators(df):
-    df["EMA50"] = ta.trend.ema_indicator(df["close"], window=50)
-    df["EMA200"] = ta.trend.ema_indicator(df["close"], window=200)
+    # EMA
+    df["EMA50"] = df["close"].ewm(span=50, adjust=False).mean()
+    df["EMA200"] = df["close"].ewm(span=200, adjust=False).mean()
 
-    df["RSI"] = ta.momentum.rsi(df["close"], window=14)
+    # RSI
+    delta = df["close"].diff()
 
-    macd = ta.trend.MACD(df["close"])
+    gain = delta.where(delta > 0, 0).rolling(14).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
 
-    df["MACD"] = macd.macd()
-    df["MACD_SIGNAL"] = macd.macd_signal()
+    rs = gain / loss
+    df["RSI"] = 100 - (100 / (1 + rs))
 
+    # MACD
+    ema12 = df["close"].ewm(span=12, adjust=False).mean()
+    ema26 = df["close"].ewm(span=26, adjust=False).mean()
+
+    df["MACD"] = ema12 - ema26
+    df["MACD_SIGNAL"] = df["MACD"].ewm(span=9, adjust=False).mean()
+
+    # Average Volume
     df["AVG_VOLUME"] = df["volume"].rolling(20).mean()
 
     return df
