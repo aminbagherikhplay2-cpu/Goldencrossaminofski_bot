@@ -1,0 +1,12 @@
+import os
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+TIMEFRAME = "1d"
+
+EMA_FAST = 50
+EMA_SLOW = 200
+
+RSI_PERIOD = 14
+VOLUME_MULTIPLIER = 1.5
