@@ -10,11 +10,13 @@ strong = []
 
 
 def get_symbols():
-    info = client.get_exchange_info()
+    url = "https://api.binance.com/api/v3/exchangeInfo"
+
+    data = requests.get(url, timeout=30).json()
 
     symbols = []
 
-    for s in info["symbols"]:
+    for s in data["symbols"]:
         if (
             s["quoteAsset"] == "USDT"
             and s["status"] == "TRADING"
